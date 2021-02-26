@@ -30,4 +30,4 @@ def range_to_tuple(range):
 class NamcsIndex(object):
 
     def __init__(self, dataframe):
-        self.dataframe = dataframe
+        self._dataframe = dataframe
