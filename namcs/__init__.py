@@ -1,0 +1,1 @@
+from namcs.io import read_datafile
