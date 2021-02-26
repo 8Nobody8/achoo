@@ -1,5 +1,11 @@
 import os, sys
 import pandas as pd
+from HeadersNotUniqueException import HeadersNotUniqueException
+
+def throw_if_col_has_duplicates(df_col):
+    dupes = df_col.loc[df_col.duplicated() == True]
+    if not dupes.empty:
+        raise HeadersNotUniqueException('The following indices are not unique: {}.'.format(dupes.index.values.tolist()))
 
 def range_to_tuple(range):
     x = range.split('-', 1)
@@ -15,10 +21,10 @@ cols = pd.read_csv(
     converters={'file_location': range_to_tuple}
 )
 
-ranges = cols['file_location'].tolist()
+throw_if_col_has_duplicates(cols['item_no'])
 
-cols['item_headers'] = cols['item_no'].astype(str) + cols['item_description']
-headers = cols['item_headers'].tolist()
+ranges = cols['file_location'].tolist()
+headers = cols['item_no'].tolist()
 
 df = pd.read_fwf(
     os.path.join('data', 'namcs2016.data'),
@@ -27,3 +33,5 @@ df = pd.read_fwf(
 )
 
 print(df)
+
+print(df.describe())
