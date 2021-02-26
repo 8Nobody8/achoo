@@ -140,3 +140,4 @@ dmypy.json
 
 # Data file types
 *.csv
+*.data
