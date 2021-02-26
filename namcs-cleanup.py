@@ -16,7 +16,9 @@ cols = pd.read_csv(
 )
 
 ranges = cols['file_location'].tolist()
-headers = cols['item_description'].tolist()
+
+cols['item_headers'] = cols['item_no'].astype(str) + cols['item_description']
+headers = cols['item_headers'].tolist()
 
 df = pd.read_fwf(
     os.path.join('data', 'namcs2016.data'),
