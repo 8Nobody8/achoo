@@ -10,5 +10,4 @@ df = namcs.read_data(
     os.path.join('data', 'namcs2016.data')
 )
 
-print(df)
-print(df.describe())
+df.hist(column=1)
