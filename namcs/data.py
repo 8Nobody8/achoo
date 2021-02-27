@@ -2,13 +2,12 @@ import pandas as pd
 from namcs.index import NamcsIndex
 
 def read_data(namcs_index, data_file):
-    headers = namcs_index._dataframe.index.tolist()
-    ranges = namcs_index._dataframe['file_location'].tolist()
+    colspecs, names = namcs_index._get_colspecs_and_names()
 
     df = pd.read_fwf(
         data_file,
-        colspecs=ranges,
-        names=headers,
+        colspecs=colspecs,
+        names=names,
     )
 
     return df

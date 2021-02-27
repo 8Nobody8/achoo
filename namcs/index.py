@@ -11,8 +11,6 @@ def read_index(index_file):
 
     throw_if_col_has_duplicates(cols['item_no'])
 
-    cols.set_index('item_no', inplace=True)
-
     return NamcsIndex(cols)
 
 def throw_if_col_has_duplicates(df_col):
@@ -31,3 +29,15 @@ class NamcsIndex(object):
 
     def __init__(self, dataframe):
         self._dataframe = dataframe
+    
+    def _get_colspecs_and_names(self):
+        return (
+            self._dataframe['file_location'].tolist(),
+            self._dataframe['item_no'].tolist()
+        )
+    
+    def include_items(self, item_list):
+        self._dataframe = self._dataframe.loc[self._dataframe['item_no'].isin(item_list)]
+    
+    def exclude_items(self, item_list):
+        self._dataframe = self._dataframe.loc[~self._dataframe['item_no'].isin(item_list)]
